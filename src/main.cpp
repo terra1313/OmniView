@@ -352,8 +352,8 @@ int main()
     }
   };
 
-  // one extra space for '\0' character and another 
-  // for one past the last accepted input character  
+  // one extra space for '\0' character and another
+  // for one past the last accepted input character
   static char vinBuffer[19];
   auto vinFilter = [](ImGuiInputTextCallbackData *data) -> int
   {
@@ -366,7 +366,7 @@ int main()
 
     if (indx >= 1 && indx <= 17)
       return !std::regex_match(s, chars_regex); // return 0 as passed for matched chars
-    return 1; // discard exceeding chars
+    return 1;                                   // discard exceeding chars
   };
 
   auto render = [&]()
@@ -647,11 +647,22 @@ int main()
         ImGui::PopStyleColor(3);
       }
       ImGui::SameLine();
+
+      if (ImGui::IsPopupOpen("Speichern der aufgenommenen Daten"))
+        ImGui::PushStyleColor(
+            ImGuiCol_Text, load_json<Color>(config, "text", "color", "inactive"));
+
       if (ImGui::Button(
               load_json<std::string>(language, "button", "save").c_str(), toolBtnSize))
-      {
         ImGui::OpenPopup("Speichern der aufgenommenen Daten");
+
+      if (!(ImGui::IsPopupOpen("Speichern der aufgenommenen Daten")))
+      {
+        ImGui::PopStyleColor();
+        ImGui::PushStyleColor(
+            ImGuiCol_Text, load_json<Color>(config, "text", "color", "normal"));
       }
+
       ImGui::SameLine();
       ImGui::PushStyleColor(
           ImGuiCol_Text, load_json<Color>(config, "text", "color", "inactive"));
@@ -725,12 +736,12 @@ int main()
       ImGui::InputTextWithHint("ID", "Enter ID(optional)", ID, IM_ARRAYSIZE(ID));
       ImGui::SetNextItemWidth(300);
       ImGui::InputTextWithHint("VIN", "Enter VIN", vinBuffer, IM_ARRAYSIZE(vinBuffer),
-                                ImGuiInputTextFlags_CharsUppercase |
-                                ImGuiInputTextFlags_CharsNoBlank |
-                                ImGuiInputTextFlags_CallbackCharFilter,
-                                // callback function to filter each character
-                                // before putting it into the buffer
-                                vinFilter);
+                               ImGuiInputTextFlags_CharsUppercase |
+                                   ImGuiInputTextFlags_CharsNoBlank |
+                                   ImGuiInputTextFlags_CallbackCharFilter,
+                               // callback function to filter each character
+                               // before putting it into the buffer
+                               vinFilter);
       ImGui::SetNextItemWidth(300);
       ImGui::InputTextWithHint("milage", "Enter milage", milage, IM_ARRAYSIZE(milage));
 
