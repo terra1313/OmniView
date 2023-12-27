@@ -12,6 +12,7 @@ std::string getSubdirectoriesInFolder(nlohmann::json language,
                                       fs::path const &saves_folder_path, char *scantype = 0,
                                       char *inputvin = 0, char *mileage = 0)
 {
+<<<<<<< HEAD
   std::vector<std::string> subdirectories;
   subdirectories.push_back(
       load_json<std::string>(language, "savepopup", "new_car"));
@@ -19,12 +20,26 @@ std::string getSubdirectoriesInFolder(nlohmann::json language,
   {
     for (const auto &entry : fs::directory_iterator(saves_folder_path))
       if (fs::is_directory(entry))
+=======
+  bool deviceFields = false;
+  if (scantype != 0 && inputvin != 0 && mileage != 0)
+    deviceFields = true;
+
+  std::vector<std::string> subdirectories;
+  subdirectories.push_back(
+      load_json<std::string>(language, "savepopup", "new_car"));
+  if (fs::exists(saves_folder_path) && fs::is_directory(saves_folder_path)) 
+  {
+    for (const auto &entry : fs::directory_iterator(saves_folder_path)) 
+      if (fs::is_directory(entry)) 
+>>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
         subdirectories.push_back(entry.path().filename().string());
   }
 
   static int selectedOption = 0;
   static std::string selectedFolder =
       load_json<std::string>(language, "savepopup", "new_car");
+<<<<<<< HEAD
   if (!subdirectories.empty())
   {
     // Erstellen eines Arrays von C-Strings (char*)
@@ -32,6 +47,51 @@ std::string getSubdirectoriesInFolder(nlohmann::json language,
     for (size_t i = 0; i < subdirectories.size(); ++i)
       vins[i] = strdup(subdirectories[i].c_str());
 
+=======
+  if (!subdirectories.empty()) 
+  {
+    // Erstellen eines Arrays von C-Strings (char*)
+    char **vins = new char *[subdirectories.size()];
+    for (size_t i = 0; i < subdirectories.size(); ++i) 
+      vins[i] = strdup(subdirectories[i].c_str());
+  
+   if (deviceFields)
+    {
+       const std::string newcar =
+          load_json<std::string>(language, "savepopup", "new_car");
+
+      ImGui::InputText(
+          load_json<std::string>(language, "input", "scantype", "label").c_str(),
+          scantype, sizeof(scantype));
+
+      if (selectedOption == 0)
+      {
+        ImGui::InputText(
+            load_json<std::string>(language, "input", "fin", "label").c_str(),
+            inputvin, sizeof(inputvin));
+        selectedFolder = inputvin;
+      }
+
+      ImGui::InputText(
+          load_json<std::string>(language, "input", "mileage", "label").c_str(),
+          mileage, sizeof(mileage));
+
+      // Verwendung von vins (char* array) mit ImGui
+      if (ImGui::Combo(
+              load_json<std::string>(language, "savepopup", "known_cars").c_str(),
+              &selectedOption, vins, static_cast<int>(subdirectories.size())))
+        selectedFolder = subdirectories[selectedOption];
+    }
+    else 
+    {
+    // Verwendung von vins (char* array) mit ImGui
+    if (ImGui::Combo(
+            load_json<std::string>(language, "savepopup", "known_cars").c_str(),
+            &selectedOption, vins, static_cast<int>(subdirectories.size()))) {
+      selectedFolder = subdirectories[selectedOption];
+    }
+    static char inputvin[18];
+>>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
     const std::string newcar =
         load_json<std::string>(language, "savepopup", "new_car");
 
@@ -46,6 +106,7 @@ std::string getSubdirectoriesInFolder(nlohmann::json language,
           inputvin, sizeof(inputvin));
       selectedFolder = inputvin;
     }
+<<<<<<< HEAD
 
     ImGui::InputText(
         load_json<std::string>(language, "input", "mileage", "label").c_str(),
@@ -58,6 +119,9 @@ std::string getSubdirectoriesInFolder(nlohmann::json language,
     {
       selectedFolder = subdirectories[selectedOption];
     }
+=======
+   }
+>>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
   }
 
   return selectedFolder;

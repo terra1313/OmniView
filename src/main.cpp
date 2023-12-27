@@ -648,7 +648,12 @@ int main()
       }
       ImGui::SameLine();
 
+<<<<<<< HEAD
       if (ImGui::IsPopupOpen("Speichern der aufgenommenen Daten"))
+=======
+          // gray out "Speichern" button when pop-up is open
+        if (ImGui::IsPopupOpen("Speichern der aufgenommenen Daten"))
+>>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
         ImGui::PushStyleColor(
             ImGuiCol_Text, load_json<Color>(config, "text", "color", "inactive"));
 
@@ -656,6 +661,10 @@ int main()
               load_json<std::string>(language, "button", "save").c_str(), toolBtnSize))
         ImGui::OpenPopup("Speichern der aufgenommenen Daten");
 
+<<<<<<< HEAD
+=======
+       // normal style when pop-up is closed 
+>>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
       if (!(ImGui::IsPopupOpen("Speichern der aufgenommenen Daten")))
       {
         ImGui::PopStyleColor();

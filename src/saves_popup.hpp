@@ -80,15 +80,24 @@ void saves_popup(nlohmann::json const &config, nlohmann::json const &language,
   static bool b2 = false;
   static bool hasSelectedPath = false;
 
+<<<<<<< HEAD
    // To explore paths
   static ImGui::FileBrowser fileBrowser;
+=======
+    // select directory instead of regular file
+  static ImGui::FileBrowser fileBrowser(ImGuiFileBrowserFlags_SelectDirectory);
+>>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
   if (ImGui::Button("Duechsuchen"))
     fileBrowser.Open();
 
   fileBrowser.Display();
   static std::string selectedPath = "";
   
+<<<<<<< HEAD
   if (fileBrowser.HasPath())
+=======
+  if (fileBrowser.HasSelected())
+>>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
   {
     hasSelectedPath = true;
     selectedPath = fileBrowser.GetPwd();
@@ -208,7 +217,11 @@ void saves_popup(nlohmann::json const &config, nlohmann::json const &language,
     return complete_path;
   };
 
+<<<<<<< HEAD
    // to save captureData from main into file
+=======
+    // to save captureData from main into file
+>>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
   if (ImGui::Button(load_json<std::string>(language, "button", "save").c_str(),
                     ImVec2(load_json<Size>(config, "button"))))
   {
@@ -228,8 +241,12 @@ void saves_popup(nlohmann::json const &config, nlohmann::json const &language,
   ImGui::SameLine();
   if (ImGui::Button(load_json<std::string>(language, "button", "back").c_str(), {0, 0}))
     ImGui::CloseCurrentPopup();
+<<<<<<< HEAD
 
   fs::path complete_path;
+=======
+fs::path complete_path;
+>>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
   auto saveDevice = [&]()
   {
     if (path[0] == '\0')
@@ -255,9 +272,15 @@ void saves_popup(nlohmann::json const &config, nlohmann::json const &language,
   // if both devices are selected
   else if (b1 && b2)
   {
+<<<<<<< HEAD
     sImGui::SameLine();
     ImGui::Dummy({565, 0});
     ImGui::SameLine();
+=======
+    ImGui::SameLine();
+    ImGui::Dummy({565, 0});
+    ImGui::SameLine();
+>>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
     ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 50);
 
     if (ImGui::Button(" + "))
