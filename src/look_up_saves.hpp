@@ -13,6 +13,7 @@ std::string getSubdirectoriesInFolder(nlohmann::json language,
                                       char *inputvin = 0, char *mileage = 0)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   std::vector<std::string> subdirectories;
   subdirectories.push_back(
       load_json<std::string>(language, "savepopup", "new_car"));
@@ -28,17 +29,30 @@ std::string getSubdirectoriesInFolder(nlohmann::json language,
   std::vector<std::string> subdirectories;
   subdirectories.push_back(
       load_json<std::string>(language, "savepopup", "new_car"));
+=======
+  bool deviceFields = false;
+  if (scantype != 0 && inputvin != 0 && mileage != 0)
+    deviceFields = true;
+
+  std::vector<std::string> subdirectories;
+  subdirectories.push_back(
+      load_json<std::string>(language, "savepopup", "new_car"));
+>>>>>>> e98d520 (fixed a bug in saves_popup)
   if (fs::exists(saves_folder_path) && fs::is_directory(saves_folder_path)) 
   {
     for (const auto &entry : fs::directory_iterator(saves_folder_path)) 
       if (fs::is_directory(entry)) 
+<<<<<<< HEAD
 >>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
+=======
+>>>>>>> e98d520 (fixed a bug in saves_popup)
         subdirectories.push_back(entry.path().filename().string());
   }
 
   static int selectedOption = 0;
   static std::string selectedFolder =
       load_json<std::string>(language, "savepopup", "new_car");
+<<<<<<< HEAD
 <<<<<<< HEAD
   if (!subdirectories.empty())
   {
@@ -60,6 +74,20 @@ std::string getSubdirectoriesInFolder(nlohmann::json language,
        const std::string newcar =
           load_json<std::string>(language, "savepopup", "new_car");
 
+=======
+  if (!subdirectories.empty()) 
+  {
+    // Erstellen eines Arrays von C-Strings (char*)
+    char **vins = new char *[subdirectories.size()];
+    for (size_t i = 0; i < subdirectories.size(); ++i) 
+      vins[i] = strdup(subdirectories[i].c_str());
+  
+   if (deviceFields)
+    {
+       const std::string newcar =
+          load_json<std::string>(language, "savepopup", "new_car");
+
+>>>>>>> e98d520 (fixed a bug in saves_popup)
       ImGui::InputText(
           load_json<std::string>(language, "input", "scantype", "label").c_str(),
           scantype, sizeof(scantype));
@@ -107,6 +135,7 @@ std::string getSubdirectoriesInFolder(nlohmann::json language,
       selectedFolder = inputvin;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     ImGui::InputText(
         load_json<std::string>(language, "input", "mileage", "label").c_str(),
@@ -122,10 +151,14 @@ std::string getSubdirectoriesInFolder(nlohmann::json language,
 =======
    }
 >>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
+=======
+   }
+>>>>>>> e98d520 (fixed a bug in saves_popup)
   }
 
   return selectedFolder;
 }
+
 std::string select_combo_from_json(nlohmann::json const &language,
                                    std::string const &key,
                                    int &selectedOption) {

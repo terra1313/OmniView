@@ -9,7 +9,8 @@
 namespace fs = std::filesystem;
 
 static void save(std::map<Omniscope::Id, std::vector<std::pair<double, double>>> const
-                &alignedData, fs::path const &outFile)
+                     &alignedData,
+                 fs::path const &outFile)
 {
   auto minSize = std::numeric_limits<std::size_t>::max();
   std::vector<std::vector<std::pair<double, double>> const *> data;
@@ -81,23 +82,33 @@ void saves_popup(nlohmann::json const &config, nlohmann::json const &language,
   static bool hasSelectedPath = false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
    // To explore paths
   static ImGui::FileBrowser fileBrowser;
 =======
     // select directory instead of regular file
   static ImGui::FileBrowser fileBrowser(ImGuiFileBrowserFlags_SelectDirectory);
 >>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
+=======
+  // select directory instead of regular file
+  static ImGui::FileBrowser fileBrowser(ImGuiFileBrowserFlags_SelectDirectory);
+>>>>>>> e98d520 (fixed a bug in saves_popup)
   if (ImGui::Button("Duechsuchen"))
     fileBrowser.Open();
 
   fileBrowser.Display();
   static std::string selectedPath = "";
+<<<<<<< HEAD
   
 <<<<<<< HEAD
   if (fileBrowser.HasPath())
 =======
   if (fileBrowser.HasSelected())
 >>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
+=======
+
+  if (fileBrowser.HasSelected())
+>>>>>>> e98d520 (fixed a bug in saves_popup)
   {
     hasSelectedPath = true;
     selectedPath = fileBrowser.GetPwd();
@@ -113,7 +124,11 @@ void saves_popup(nlohmann::json const &config, nlohmann::json const &language,
     ImGui::Checkbox("Device2", &b2);
     ImGui::EndCombo();
   }
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> e98d520 (fixed a bug in saves_popup)
   static char scantype[255] = "";
   static char vin[18] = "";
   static char mileage[10] = "";
@@ -218,10 +233,14 @@ void saves_popup(nlohmann::json const &config, nlohmann::json const &language,
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
    // to save captureData from main into file
 =======
     // to save captureData from main into file
 >>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
+=======
+  // to save captureData from main into file
+>>>>>>> e98d520 (fixed a bug in saves_popup)
   if (ImGui::Button(load_json<std::string>(language, "button", "save").c_str(),
                     ImVec2(load_json<Size>(config, "button"))))
   {
@@ -244,6 +263,7 @@ void saves_popup(nlohmann::json const &config, nlohmann::json const &language,
 <<<<<<< HEAD
 
   fs::path complete_path;
+<<<<<<< HEAD
 =======
 fs::path complete_path;
 >>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
@@ -253,6 +273,14 @@ fs::path complete_path;
       complete_path = makeDirectory(storagePath_1);
     else
       complete_path = makeDirectory(fs::path(path) / storagePath_1);
+=======
+  auto saveDevice = [&]()
+  {
+    if (path[0] == '\0')
+      complete_path = makeDirectory(fs::path(storagePath_1));
+    else
+      complete_path = makeDirectory(fs::path(path) / fs::path(storagePath_1));
+>>>>>>> e98d520 (fixed a bug in saves_popup)
 
     std::string filename = fileName(b1 ? "device1" : "device2");
     saveData(allData, complete_path / filename);
@@ -261,17 +289,29 @@ fs::path complete_path;
 
   // if only one of the devices is selected
   if ((b1 || b2) && !(b1 && b2))
+<<<<<<< HEAD
      {
     ImGui::SameLine();
     ImGui::Dummy({500, 0});
     ImGui::SameLine();
     if (ImGui::Button("Save Device"))
       saveDevice();
+=======
+  {
+    ImGui::SameLine();
+    ImGui::Dummy({500, 0});
+    ImGui::SameLine();
+    if (ImGui::Button("Save Device")) {
+      saveDevice();
+      ImGui::CloseCurrentPopup();
+    }
+>>>>>>> e98d520 (fixed a bug in saves_popup)
   }
 
   // if both devices are selected
   else if (b1 && b2)
   {
+<<<<<<< HEAD
 <<<<<<< HEAD
     sImGui::SameLine();
     ImGui::Dummy({565, 0});
@@ -281,6 +321,11 @@ fs::path complete_path;
     ImGui::Dummy({565, 0});
     ImGui::SameLine();
 >>>>>>> 65a0c3c (fixed Erstellung Lerndatensatz button crashing, used a flag in imfilebrowser.h to select directories for the current feature)
+=======
+    ImGui::SameLine();
+    ImGui::Dummy({565, 0});
+    ImGui::SameLine();
+>>>>>>> e98d520 (fixed a bug in saves_popup)
     ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 50);
 
     if (ImGui::Button(" + "))
@@ -303,6 +348,10 @@ fs::path complete_path;
       std::string filename = fileName("device2");
       saveData(allData, complete_path / filename);
       storagePath_2[0] = 0;
+<<<<<<< HEAD
+=======
+      ImGui::CloseCurrentPopup();
+>>>>>>> e98d520 (fixed a bug in saves_popup)
     }
   }
 }
